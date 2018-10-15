@@ -1,43 +1,59 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from "react-native";
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import theme from './theme.js';
 
-import { TabBar } from './TabBar';
+import TabBar from './TabBar';
 import { Home } from './Home';
+import Session from './Session';
+import SportingGoods from './SportingGoods';
 import Login from './Login';
 import Register from './Register';
 
-import session from './Session/reducer.js';
+import reducers from './reducers.js';
+import Api from './Api.js';
 
-const store = createStore(
-  combineReducers({
-    session
-  }),
-  applyMiddleware(thunk)
-);
+const api = new Api('https://www.equipt.rentals/api');
 
-const Navigator = createBottomTabNavigator({
+// Setup Naviatiors
+const SignedOutNavigator = createBottomTabNavigator({
   Home,
   Login,
   Register
 }, {
   initialRouteName: 'Home',
-  tabBarComponent: props => <TabBar { ...props }/>,
+  tabBarComponent: props => <TabBar { ...props } isSignedIn={ false }/>,
   tabBarPosition: "bottom"
 });
 
-export default class App extends Component {
+const SignedInNavigator = createBottomTabNavigator({
+  SportingGoods
+}, {
+  initialRouteName: 'SportingGoods',
+  tabBarComponent: props => <TabBar { ...props } isSignedIn={ true }/>,
+  tabBarPosition: "bottom"
+});
 
+// Thunk setup
+const thunkMiddleware = thunk.withExtraArgument({api});
+
+// Create Store
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunkMiddleware)
+);
+
+export default class App extends Component {
   render() {
     return (
       <Provider store={ store }>
-        <Navigator/>
+        <Session signedInComponent={ <SignedInNavigator/> } signOutComponent={ <SignedOutNavigator/> }/>
       </Provider>
     )
   }
-
 }

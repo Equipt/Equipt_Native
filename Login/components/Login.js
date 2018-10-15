@@ -15,14 +15,14 @@ export class Login extends Component {
 
   render() {
     const { email, password } = this.state;
-    const { actions } = this.props;
+    const { actions, navigation } = this.props;
 
     return (
       <View style={styles.container}>
         <TextInput style={ styles.formField } placeholder="Enter your Email" onChangeText={ email => this.setState({ email }) }/>
         <TextInput secureTextEntry={ true } style={ styles.formField } placeholder="Enter your Password" onChangeText={ password => this.setState({ password }) }/>
-        <TouchableOpacity style={{ width: '100%', marginBottom: 20}} onPress={ () => actions.login(this.state) }>
-          <Text style={ email && password ? styles.successBtn : styles.deactiveBtn }>Login</Text>
+        <TouchableOpacity style={{ width: '100%', marginBottom: 20}} onPress={ () => actions.login({ email, password }, navigation) }>
+          <Text style={ email && password ? styles.successBtn : styles.deactiveBtn }>Login Test</Text>
         </TouchableOpacity>
         <TouchableOpacity style={ styles.facebookBtn } onPress={ () => actions.facebookLogin() }>
           <Text style={ styles.facebookText }>Facebook Login</Text>

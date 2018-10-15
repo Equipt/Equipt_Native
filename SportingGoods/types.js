@@ -1,0 +1,3 @@
+export default {
+  SET_SPORTING_GOODS: 'SET_SPORTING_GOODS'
+}

@@ -8,7 +8,7 @@ export class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={ styles.logo } source={require('../assets/logo.png')} />
+        <Image style={ styles.logo } source={require('../assets/icon.png')} />
         <Text style={ styles.brandName }>Equipt</Text>
       </View>
     )
