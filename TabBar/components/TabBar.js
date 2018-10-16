@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Notification from '../../Notification';
 
@@ -13,6 +13,7 @@ export default class TabBar extends Component {
     }
     this.renderSignedInBar = this.renderSignedInBar.bind(this);
     this.renderSignedOutBar = this.renderSignedOutBar.bind(this);
+    this.renderIcon = this.renderIcon.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -25,6 +26,14 @@ export default class TabBar extends Component {
     return isSignedIn ? this.renderSignedInBar() : this.renderSignedOutBar();
   }
 
+  renderIcon() {
+    return (
+      <Image style={ styles.tabImage } source={{
+        uri: 'https://s3-us-west-2.amazonaws.com/equipt-assets/sprite.png'
+      }}/>
+    );
+  }
+
   renderSignedInBar() {
     const { currentTab } = this.state;
     const { navigation: { navigate }, actions } = this.props;
@@ -32,13 +41,20 @@ export default class TabBar extends Component {
       <View>
         <Notification/>
         <View style={ styles.wrapper }>
-          <TouchableOpacity style={[ styles.tab, currentTab.key === 'Login' && styles.disabled ]} onPress={ () => actions.signOut() }>
-            <Text style={ styles.text }>SignOut</Text>
+          <TouchableOpacity style={[ styles.tab, currentTab.key === 'SportingGoods' && styles.disabled ]} onPress={ () => navigate('SportingGoods') }>
+            { this.renderIcon() }
+            <Text style={[styles.text, styles.smallTab]}>Rent</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[ styles.tab, currentTab.key === 'Register' && styles.disabled ]} onPress={ () => navigate('Register') }>
-            <Text style={ styles.text }>Register</Text>
+          <TouchableOpacity style={[ styles.tab, currentTab.key === 'Schedule' && styles.disabled ]} onPress={ () => navigate('Schedule') }>
+            <Text style={[styles.text, styles.smallTab]}>My Schedule</Text>
           </TouchableOpacity>
-        </View>
+          <TouchableOpacity style={[ styles.tab, currentTab.key === 'OwnedGoods' && styles.disabled ]} onPress={ () => navigate('OwnedGoods') }>
+            <Text style={[styles.text, styles.smallTab]}>My Items</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[ styles.tab, currentTab.key === 'Profile' && styles.disabled ]} onPress={ () => navigate('Profile') }>
+            <Text style={[styles.text, styles.smallTab]}>Profile</Text>
+          </TouchableOpacity>
+s        </View>
       </View>
     )
   }
@@ -69,6 +85,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around'
   },
+  tabImage: {
+    width: 30,
+    height: 30
+  },
   tab: {
     flex: 1,
     borderColor: '#000',
@@ -78,6 +98,9 @@ const styles = StyleSheet.create({
     borderRightColor: '#DDDDDD',
     borderLeftWidth: 1,
     borderLeftColor: '#DDDDDD'
+  },
+  smallTab: {
+    fontSize: 11
   },
   text: {
     color: 'white',

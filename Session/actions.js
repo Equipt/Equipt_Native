@@ -7,13 +7,18 @@ export const login = (data, navigation) => async (dispatch, getState, { api }) =
   try {
     const { json, res } = await api.create('/session', data);
     if (res.status === 200) {
+
       await AsyncStorage.setItem('api_token', json.apiKey);
+
       dispatch({
         type: types.SET_CURRENT_USER,
         payload: json
       });
+
     } else {
+
       dispatch(showNotification(json));
+
     }
   } catch(err) {
     console.log('ERROR', err);
@@ -34,7 +39,14 @@ export const facebookLogin = () => async (dispatch) => {
 
 export const fetchCurrentUser = (navigator) => async (dispatch, getState, { api }) => {
   try {
+
+    dispatch({
+      type: types.LOADING,
+      payload: true
+    });
+
     const { json, res } = await api.get('/session/fetch_user');
+
     if (res.status === 200) {
       dispatch({
         type: types.SET_CURRENT_USER,
@@ -46,8 +58,17 @@ export const fetchCurrentUser = (navigator) => async (dispatch, getState, { api 
         payload: null
       });
     }
+    
   } catch(err) {
-    console.log('ERROR', err);
+    dispatch({
+      type: types.SET_CURRENT_USER,
+      payload: null
+    });
+  } finally {
+    dispatch({
+      type: types.LOADING,
+      payload: false
+    });
   }
 }
 

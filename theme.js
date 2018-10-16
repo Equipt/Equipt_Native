@@ -3,7 +3,6 @@ const btn = {
   padding: 20,
   color: '#fff',
   fontSize: 20,
-  fontWeight: 'bold',
   textAlign: 'center'
 };
 

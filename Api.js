@@ -58,8 +58,9 @@ export default class Api {
       return { json, res };
 
     } catch(err) {
-      console.log(err);
+
       return err;
+
     }
   }
 

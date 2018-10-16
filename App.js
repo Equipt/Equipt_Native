@@ -9,9 +9,11 @@ import theme from './theme.js';
 
 import TabBar from './TabBar';
 import { Home } from './Home';
+import Profile from './Profile';
 import Session from './Session';
 import SportingGoods from './SportingGoods';
 import Login from './Login';
+import Loading from './Loading';
 import Register from './Register';
 
 import reducers from './reducers.js';
@@ -31,7 +33,8 @@ const SignedOutNavigator = createBottomTabNavigator({
 });
 
 const SignedInNavigator = createBottomTabNavigator({
-  SportingGoods
+  SportingGoods,
+  Profile
 }, {
   initialRouteName: 'SportingGoods',
   tabBarComponent: props => <TabBar { ...props } isSignedIn={ true }/>,
