@@ -26,11 +26,9 @@ export default class TabBar extends Component {
     return isSignedIn ? this.renderSignedInBar() : this.renderSignedOutBar();
   }
 
-  renderIcon() {
+  renderIcon(iconStyles) {
     return (
-      <Image style={ styles.tabImage } source={{
-        uri: 'https://s3-us-west-2.amazonaws.com/equipt-assets/sprite.png'
-      }}/>
+      <Image style={[styles.tabImage, iconStyles]} source={require('./../../assets/sprite.png')}/>
     );
   }
 
@@ -42,16 +40,19 @@ export default class TabBar extends Component {
         <Notification/>
         <View style={ styles.wrapper }>
           <TouchableOpacity style={[ styles.tab, currentTab.key === 'SportingGoods' && styles.disabled ]} onPress={ () => navigate('SportingGoods') }>
-            { this.renderIcon() }
+            { this.renderIcon(styles.findImage) }
             <Text style={[styles.text, styles.smallTab]}>Rent</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[ styles.tab, currentTab.key === 'Schedule' && styles.disabled ]} onPress={ () => navigate('Schedule') }>
-            <Text style={[styles.text, styles.smallTab]}>My Schedule</Text>
+            { this.renderIcon(styles.schedule) }
+            <Text style={[styles.text, styles.smallTab]}>Schedule</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[ styles.tab, currentTab.key === 'OwnedGoods' && styles.disabled ]} onPress={ () => navigate('OwnedGoods') }>
+            { this.renderIcon() }
             <Text style={[styles.text, styles.smallTab]}>My Items</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[ styles.tab, currentTab.key === 'Profile' && styles.disabled ]} onPress={ () => navigate('Profile') }>
+            { this.renderIcon() }
             <Text style={[styles.text, styles.smallTab]}>Profile</Text>
           </TouchableOpacity>
 s        </View>
@@ -91,8 +92,10 @@ const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: '#000',
-    padding: 20,
+    padding: 15,
     backgroundColor: '#5C9059',
     borderRightWidth: 1,
     borderRightColor: '#DDDDDD',
@@ -100,7 +103,8 @@ const styles = StyleSheet.create({
     borderLeftColor: '#DDDDDD'
   },
   smallTab: {
-    fontSize: 11
+    fontSize: 12,
+    marginTop: 5
   },
   text: {
     color: 'white',

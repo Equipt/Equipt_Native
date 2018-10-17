@@ -9,16 +9,17 @@ class SportingGoods extends Component {
 
   componentWillMount() {
     const { actions } = this.props;
-    actions.getSportingGoods();
+    actions.fetchSportingGoods();
   }
 
   render() {
-    const { sportingGoods } = this.props;
+    const { sportingGoods, navigation } = this.props;
     console.log(sportingGoods);
     return (
       <View style={ styles.container }>
-        <FlatList data={ sportingGoods }
-                  renderItem={ ({ item }) => <SportingGoodItem { ...item }/> }
+        <FlatList data={ sportingGoods.results }
+                  style={ styles.list }
+                  renderItem={ ({ item }) => <SportingGoodItem { ...item } navigation={ navigation }/> }
                   keyExtractor={(item, index) => index.toString()}
                   />
       </View>
@@ -28,7 +29,10 @@ class SportingGoods extends Component {
 }
 
 const styles = StyleSheet.create({
-  ...theme
+  ...theme,
+  list: {
+    width: '100%'
+  }
 });
 
 export default SportingGoods;
