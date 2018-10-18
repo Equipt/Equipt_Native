@@ -15,11 +15,8 @@ export default class Api {
   }
 
   async create(route, data) {
-    try {
-      return await this.send(this.domain + route, 'POST', data);
-    } catch(err) {
-      return err;
-    }
+    console.log(this.domain + route);
+    return await this.send(this.domain + route, 'POST', data);
   }
 
   async get(route) {

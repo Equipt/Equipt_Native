@@ -23,7 +23,7 @@ const theme = {
     borderColor: '#DBDBDB',
     width: '100%',
     padding: 20,
-    marginBottom: 25,
+    marginBottom: 20,
     fontSize: 16
   },
   btn: btn,
@@ -35,6 +35,12 @@ const theme = {
     ...btn,
     backgroundColor: '#5C9059',
     opacity: 0.5
+  },
+  errorText: {
+    width: '100%',
+    minHeight: 10,
+    textAlign: 'left',
+    color: '#a94442'
   }
 
 }

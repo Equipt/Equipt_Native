@@ -17,7 +17,7 @@ export default class Session extends Component {
           } = this.props;
 
     if (loading) return <Loading/>;
-    return session ? signedInComponent : signOutComponent;
+    return session && session.apiKey ? signedInComponent : signOutComponent;
   }
 
 }

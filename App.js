@@ -22,7 +22,7 @@ import Register from './Register';
 import reducers from './reducers.js';
 import Api from './Api.js';
 
-const api = new Api('https://www.equipt.rentals/api');
+const api = new Api(process.env.API_URL);
 
 // Setup Naviatiors
 const SignedOutNavigator = createBottomTabNavigator({

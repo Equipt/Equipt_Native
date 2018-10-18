@@ -4,20 +4,29 @@ import { showNotification } from './../Notification/actions.js';
 import { Facebook } from 'expo';
 import { isLoading } from '../Loading/actions.js';
 
+
+// Login User
 export const login = (data, navigation) => async (dispatch, getState, { api }) => {
-  try {
-    const { json, res } = await api.create('/session', data);
-    if (res.status === 200) {
-      await AsyncStorage.setItem('api_token', json.apiKey);
-      dispatch(setCurrentUser(json));
-    } else {
-      dispatch(showNotification(json));
-    }
-  } catch(err) {
-    console.log('ERROR', err);
+  const { json, res } = await api.create('/session', data);
+  if (res.status === 200) {
+    await AsyncStorage.setItem('api_token', json.apiKey);
+    dispatch(setCurrentUser(json));
+  } else {
+    dispatch(showNotification(json));
   }
 };
 
+// Register User
+export const register = (user, navigation) => async(dispatch, getState, { api }) => {
+  const { json, res } = await api.create('/user', { user });
+  console.log(json, res);
+  if (res.status === 200) {
+    await AsyncStorage.setItem('api_token', json.apiKey);
+  }
+  dispatch(setCurrentUser(json));
+};
+
+// Facebook Login
 export const facebookLogin = () => async (dispatch) => {
   try {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
@@ -30,7 +39,8 @@ export const facebookLogin = () => async (dispatch) => {
   }
 };
 
-export const fetchCurrentUser = (navigator) => async (dispatch, getState, { api }) => {
+// Fetch Current User
+export const fetchCurrentUser = () => async (dispatch, getState, { api }) => {
   try {
 
     dispatch(isLoading(true));
