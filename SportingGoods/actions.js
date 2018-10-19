@@ -9,7 +9,7 @@ export const fetchSportingGoods = (keyword = '', page = 0, location = null, dist
 
   const params = {
     query: keyword,
-    // filters: `user_id != ${id}`
+    filters: `user_id != ${id}`
   };
 
   // // Set pagination if no search

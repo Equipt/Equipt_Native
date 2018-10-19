@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from "react-native";
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -25,14 +25,14 @@ import Api from './Api.js';
 const api = new Api(process.env.API_URL);
 
 // Setup Naviatiors
-const SignedOutNavigator = createBottomTabNavigator({
+const SignedOutNavigator = createStackNavigator({
   Home,
   Login,
   Register
 }, {
   initialRouteName: 'Home',
-  tabBarComponent: props => <TabBar { ...props } isSignedIn={ false }/>,
-  tabBarPosition: "bottom"
+  animationEnabled: true,
+  swipeEnabled: true
 });
 
 const SignedInNavigator = createBottomTabNavigator({
@@ -41,8 +41,10 @@ const SignedInNavigator = createBottomTabNavigator({
   Profile
 }, {
   initialRouteName: 'SportingGoods',
+  tabBarPosition: "bottom",
   tabBarComponent: props => <TabBar { ...props } isSignedIn={ true }/>,
-  tabBarPosition: "bottom"
+  animationEnabled: true,
+  swipeEnabled: true
 });
 
 // Setup angolia search

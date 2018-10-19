@@ -42,7 +42,6 @@ const theme = {
     textAlign: 'left',
     color: '#a94442'
   }
-
 }
 
 export default theme;

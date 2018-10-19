@@ -10,6 +10,15 @@ export default class SportingGood extends Component {
     actions.fetchSportingGood(slug);
   }
 
+  componentDidUpdate(newProps) {
+    const { navigation, actions, sportingGood } = this.props;
+    const oldSlug = sportingGood.slug;
+    const slug = navigation.getParam('slug');
+    if (oldSlug && slug !== oldSlug) {
+      actions.fetchSportingGood(slug);
+    }
+  }
+
   render() {
     const { sportingGood } = this.props;
     return (

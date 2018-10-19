@@ -22,7 +22,7 @@ export class Register extends Component {
   }
 
   render() {
-    const { session, actions } = this.props;
+    const { session, actions, navigation } = this.props;
     const { errors = {} } = session || {};
     console.log(errors);
     return (
@@ -38,6 +38,9 @@ export class Register extends Component {
         <Text style={ styles.errorText}>{ errors['password_confirmation'] }</Text>
         <TextInput secureTextEntry={ true } style={ styles.formField } placeholder="Confirm Password" onChangeText={ password_confirmation => this.setState({ password_confirmation }) }/>
         <SubmitBtn label="Sign Up" onSubmit={ () => actions.register(this.state) } isValid={ this.isValid() }/>
+        <TouchableOpacity onPress={ () => navigation.navigate('Login') }>
+          <Text style={ styles.link }>Already have an account?</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -45,5 +48,8 @@ export class Register extends Component {
 }
 
 const styles = StyleSheet.create({
-  ...theme
+  ...theme,
+  link: {
+    marginTop: 15
+  }
 });
