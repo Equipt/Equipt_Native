@@ -18,6 +18,7 @@ import SportingGoods from './SportingGoods';
 import Login from './Login';
 import Loading from './Loading';
 import Register from './Register';
+import Notification from './Notification';
 
 import reducers from './reducers.js';
 import Api from './Api.js';
@@ -32,7 +33,27 @@ const SignedOutNavigator = createStackNavigator({
 }, {
   initialRouteName: 'Home',
   animationEnabled: true,
-  swipeEnabled: true
+  swipeEnabled: true,
+  navigationOptions: {
+   header: <Notification customStyles={{
+     wrapper: {
+       position: 'absolute',
+       zIndex: 2,
+       top: 0,
+       left: 0,
+       width:  '100%',
+       height: 80,
+       paddingTop: 45,
+       minHeight: 50,
+       backgroundColor: '#EFDFDE'
+     },
+     closeIcon: {
+       top: 40,
+       width: 15,
+       height: 15
+     }
+   }}/>
+ }
 });
 
 const SignedInNavigator = createBottomTabNavigator({
@@ -52,7 +73,6 @@ const algoliaClient = algoliaSearch(process.env.AGOLIA_ID, process.env.AGOLIA_SE
 
 // Thunk setup
 const thunkMiddleware = thunk.withExtraArgument({ api, algoliaClient });
-
 
 // Create Store
 const store = createStore(

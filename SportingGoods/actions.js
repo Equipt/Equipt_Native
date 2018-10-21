@@ -1,8 +1,11 @@
 import types from './types.js';
 
-const perPage = 20;
-
-export const fetchSportingGoods = (keyword = '', page = 0, location = null, distance = 5000) => async (dispatch, getState, { api, algoliaClient }) => {
+export const fetchSportingGoods = ({
+  keyword = '',
+  location = null,
+  page = 0,
+  distance = 5000
+} = {}) => async (dispatch, getState, { api, algoliaClient }) => {
 
   const index = algoliaClient.initIndex(`SportingGood_${ process.env.NODE_ENV }`);
   const { id } = getState().session;
@@ -11,12 +14,6 @@ export const fetchSportingGoods = (keyword = '', page = 0, location = null, dist
     query: keyword,
     filters: `user_id != ${id}`
   };
-
-  // // Set pagination if no search
-  if (!keyword.length && !location) {
-    params.hitsPerPage = perPage;
-    params.page = page;
-  }
 
   // Set location if location
   if (location && location.lat && location.lng) {

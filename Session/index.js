@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Session from './components/Session';
 
 import * as sessionActions from './actions.js';
+import * as notificationActions from './../Notification/actions.js';
 
 const mapStateToProps = state => ({
   session: state.session,
@@ -13,7 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    ...sessionActions
+    ...sessionActions,
+    ...notificationActions
   }, dispatch)
 });
 

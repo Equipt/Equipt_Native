@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-
 import Notification from '../../Notification';
 
 export default class TabBar extends Component {

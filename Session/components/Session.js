@@ -3,12 +3,16 @@ import { View } from 'react-native';
 import Loading from '../../Loading';
 import Header from '../../Header';
 
-
 export default class Session extends Component {
 
   componentWillMount() {
     const { actions } = this.props;
     actions.fetchCurrentUser();
+  }
+
+  componentWillReceiveProps() {
+    const { actions } = this.props;
+    actions.closeNotification();
   }
 
   render() {
@@ -20,7 +24,7 @@ export default class Session extends Component {
 
     if (loading) return <Loading/>;
     return session && session.apiKey ? signedInComponent : signOutComponent;
-    
+
   }
 
 }

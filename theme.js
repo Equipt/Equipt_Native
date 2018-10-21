@@ -12,7 +12,7 @@ const theme = {
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 15
+    padding: 17
   },
   header: {
     fontSize: 20,

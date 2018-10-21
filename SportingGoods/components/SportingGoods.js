@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import Loading from '../../Loading';
 
 import Filter from './Filter';
 import SportingGoodItem from './SportingGoodItem.js';
@@ -15,13 +16,18 @@ class SportingGoods extends Component {
 
   render() {
     const { sportingGoods, navigation, actions } = this.props;
+
+    if (!sportingGoods.results || !sportingGoods.results.length) {
+      return <Loading/>;
+    }
+
     return (
       <View style={ styles.container }>
-        <Filter search={ actions.fetchSportingGoods }/>
+        <Filter actions={ actions } search={ actions.fetchSportingGoods }/>
         <FlatList data={ sportingGoods.results }
                   style={ styles.list }
                   renderItem={ ({ item }) => <SportingGoodItem { ...item } navigation={ navigation }/> }
-                  keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={ (item, index) => index.toString() }
                   />
       </View>
     )
