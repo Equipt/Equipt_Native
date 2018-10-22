@@ -83,7 +83,9 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginLeft: -1,
+    marginRight: -1,
   },
   tabImage: {
     width: 30,

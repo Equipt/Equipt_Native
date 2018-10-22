@@ -21,7 +21,7 @@ const getStyles = customStyles => (
   StyleSheet.create({
     wrapper: {
       width: '100%',
-      height: 70,
+      height: 35,
       minHeight: 50,
       padding: 10,
       backgroundColor: '#EFDFDE'

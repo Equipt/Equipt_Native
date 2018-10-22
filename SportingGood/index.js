@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import SportingGood from './components/SportingGood';
 
 import * as sportingGoodActions from './actions.js';
+import * as rentalActions from '../Rental/actions.js';
 
-const mapStateToProps = state => ({
-  sportingGood: state.sportingGood
+const mapStateToProps = ({ sportingGood, rental }) => ({
+  sportingGood,
+  rental 
 });
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    ...sportingGoodActions
+    ...sportingGoodActions,
+    ...rentalActions
   }, dispatch)
 });
 

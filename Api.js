@@ -55,9 +55,10 @@ export default class Api {
       return { json, res };
 
     } catch(err) {
-
-      return err;
-
+      return {
+        json: { error: 'Network Error' },
+        res: { status: 500 }
+      };
     }
   }
 

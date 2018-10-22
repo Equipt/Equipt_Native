@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import theme from '../../theme.js';
-import ImageSlider from 'react-native-image-slider';
 
 import Loading from '../../Loading';
+import Slider from './Slider';
+import RentalSelection from './RentalSelection';
 
 import backArrowIcon from '../../assets/back-arrow.png';
 
 export default class SportingGood extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      datePickerIsVisible: false
+    }
+  }
 
   componentWillMount() {
     const { navigation, actions } = this.props;
@@ -24,47 +32,44 @@ export default class SportingGood extends Component {
     }
   }
 
-  checkAvailability() {
-
-  }
-
   render() {
 
-    const { sportingGood = {}, navigation, actions } = this.props;
-    const { images = [], title, brand, description, pricePerDay } = sportingGood;
+    const { datePickerIsVisible } = this.state;
+    const { sportingGood = {}, rental, navigation, actions } = this.props;
+    const { images = [], rentals, title, brand, model, description, pricePerDay, slug } = sportingGood;
 
     if(!Object.keys(sportingGood).length) {
       return <Loading/>;
     }
+
+    console.log(sportingGood);
 
     return (
       <View>
         <TouchableOpacity style={ styles.backIconContainer } onPress={ () => navigation.navigate('SportingGoods') }>
           <Image source={ backArrowIcon } style={ styles.backIcon }/>
         </TouchableOpacity>
-        <ImageSlider
-          style={{
-            flex: 0,
-            width: '100%',
-            height: 200
-          }}
-          images={ images.map(image => image.file.url) }
-          customSlide={({ index, item, style, width }) => {
-            const url = process.env.BASE_URL + item;
-            return (
-              <Image key={ index } source={{ uri: url }} style={ {width: 360, height: 270 }} />
-            );
-          }}
-        />
+        <Slider images={ images }/>
         <View style={ styles.container }>
           <Text style={ styles.title }>{ title }</Text>
           <Text style={ styles.brand }>{ brand }</Text>
+          <Text style={ styles.brand }>{ model }</Text>
           <Text style={ styles.desc }>{ description }</Text>
+        </View>
+        {/* Bottom Bar */}
+        <View style={ styles.bottomBar }>
           <Text style={ styles.price }>${ pricePerDay } per day</Text>
-          <TouchableOpacity onPress={ () => this.checkAvailability() }>
-            <Text style={[styles.successBtn, styles.checkAvailabilityBtn]}>Check Availability</Text>
+          <TouchableOpacity   onPress={ () => this.setState({ datePickerIsVisible: true }) }>
+            <Text style={[styles.successBtn, styles.rentBtn]}>Select Dates</Text>
           </TouchableOpacity>
         </View>
+        <RentalSelection { ...this.props }
+          isVisible={ datePickerIsVisible }
+          sportingGood={ sportingGood }
+          rental={ rental }
+          rentals={ rentals }
+          onClose={ () => this.setState({ datePickerIsVisible: false }) }
+        />
       </View>
     )
   }
@@ -77,17 +82,22 @@ const styles = StyleSheet.create({
     margin: 20
   },
   title: {
+    color: '#484848',
     fontSize: 22,
     fontWeight: 'bold'
   },
   brand: {
+    color: '#484848',
     marginTop: 5
   },
   desc: {
+    color: '#484848',
     marginTop: 10
   },
   price: {
-    fontSize: 16,
+    color: '#484848',
+    marginTop: 20,
+    fontSize: 20,
     fontWeight: 'bold'
   },
   sliderContainer: {
@@ -104,7 +114,24 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
-  checkAvailabilityBtn: {
-    marginTop: 20
+  bottomBar: {
+    position: 'absolute',
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    height: 80,
+    width: '100%',
+    top: Dimensions.get('window').height - 150,
+    left: 0,
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: '#EEEEEE',
+  },
+  rentBtn: {
+    marginTop: 10,
+    paddingLeft: 45,
+    paddingRight: 45,
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 16,
   }
 });
