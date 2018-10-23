@@ -9,9 +9,19 @@ import Notification from '../../Notification';
 
 const moment = extendMoment(Moment);
 
-const RentalSelection = ({ theme, sportingGood, rentals, rental, actions, isVisible = false, onClose, onSelect }) => (
+const RentalSelection = ({
+  theme,
+  sportingGood,
+  rentals,
+  rental,
+  actions,
+  isVisible = false,
+  onClose,
+  onSelect,
+  customNotificationStyles
+}) => (
   <Modal visible={ isVisible }>
-    <Notification/>
+    <Notification customStyles={ customNotificationStyles }/>
     <TouchableOpacity style={ styles.closeIconContainer } onPress={ onClose }>
       <Image source={ closeIcon } style={ styles.closeIcon }/>
     </TouchableOpacity>
@@ -46,8 +56,8 @@ const takenDay = (rentals, date) => {
 const styles = StyleSheet.create({
   ...theme,
   modalContainer: {
-    paddingTop: 50,
-    marginBottom: 100
+    paddingTop: 90,
+    marginBottom: 70
   },
   day: {
     width: 40,
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
   rentBtnContainer: {
     position: 'absolute',
     left: 0,
-    top: Dimensions.get('window').height - 65,
+    top: Dimensions.get('window').height - 64,
     width: '100%',
     zIndex: 10000
   }
@@ -90,6 +100,22 @@ RentalSelection.defaultProps = {
     },
     activeDayTextStyle: {
       color: '#fff',
+    }
+  },
+  customNotificationStyles: {
+    wrapper: {
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      height: 100,
+      minHeight: 50,
+      padding: 10,
+      backgroundColor: '#EFDFDE',
+      zIndex: 100
+    },
+    text: {
+      color: '#a94442',
+      textAlign: 'center'
     }
   }
 }

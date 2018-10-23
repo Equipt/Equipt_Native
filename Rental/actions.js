@@ -27,8 +27,7 @@ export const selectRental = (range, sportingGood) => async(dispatch, getState, {
       payload: json
     });
   } else {
-
-    dispatch(showNotification({ error: 'These dates are not available!'}));
+    dispatch(showNotification(json));
   }
 
 }
