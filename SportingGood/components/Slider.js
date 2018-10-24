@@ -1,6 +1,8 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Dimensions } from 'react-native';
 import ImageSlider from 'react-native-image-slider';
+
+const screenWidth = Dimensions.get('window').width;
 
 const Slider = ({ images = [] }) => (
   <ImageSlider
@@ -13,7 +15,7 @@ const Slider = ({ images = [] }) => (
     customSlide={({ index, item, style, width }) => {
       const url = process.env.BASE_URL + item;
       return (
-        <Image key={ index } source={{ uri: url }} style={ {width: 360, height: 270 }} />
+        <Image key={ index } source={{ uri: url }} style={ {width: screenWidth, height: 270 }} />
       );
     }}
   />

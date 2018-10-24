@@ -1,6 +1,6 @@
 import moment from 'moment';
 import types from './types.js';
-import { showNotification } from '../Notification/actions.js';
+import { showNotification, closeNotification } from '../Notification/actions.js';
 
 export const selectRental = (range, sportingGood) => async(dispatch, getState, { api }) => {
 
@@ -17,7 +17,7 @@ export const selectRental = (range, sportingGood) => async(dispatch, getState, {
   const { json, res } = await api.create(`/sporting_goods/${ slug }/rentals/check_availability`, {
     rental: {
       start_date: moment(startDate).format('YYYY-MM-DD'),
-      end_date: moment(endDate).format('YYYY-MM-DD')
+      end_date: moment(endDate).add(1, 'minute').format('YYYY-MM-DD')
     }
   });
 
@@ -26,8 +26,13 @@ export const selectRental = (range, sportingGood) => async(dispatch, getState, {
       type: types.SET_RENTAL,
       payload: json
     });
+    dispatch(closeNotification());
   } else {
-    dispatch(showNotification(json));
+    await dispatch({
+      type: types.SET_RENTAL,
+      payload: null
+    });
+    dispatch(showNotification({error: 'Sorry, these dates are not available!'}));
   }
 
 }

@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     zIndex: 2
   },
   closeIcon: {
+    marginTop: 20,
     width: 20,
     height: 20,
   },
@@ -107,15 +108,25 @@ RentalSelection.defaultProps = {
       position: 'absolute',
       top: 0,
       width: '100%',
-      height: 100,
+      height: 80,
+      marginBottom: 10,
       minHeight: 50,
       padding: 10,
       backgroundColor: '#EFDFDE',
       zIndex: 100
     },
     text: {
+      marginTop: 35,
       color: '#a94442',
       textAlign: 'center'
+    },
+    closeWrapper: {
+      position: 'absolute',
+      zIndex: 1,
+      right: 5,
+      top: 45,
+      width: 20,
+      height: 20
     }
   }
 }

@@ -6,8 +6,6 @@ const Notification = ({ isOpen, error, info, actions, customStyles = {} }) => {
 
   const styles = getStyles(customStyles);
 
-  console.log(error);
-
   return isOpen ?
     (<View style={ styles.wrapper }>
       <TouchableOpacity style={ styles.closeWrapper } onPress={ actions.closeNotification }>
