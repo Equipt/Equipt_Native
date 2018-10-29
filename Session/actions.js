@@ -19,7 +19,6 @@ export const login = (data, navigation) => async (dispatch, getState, { api }) =
 // Register User
 export const register = (user, navigation) => async(dispatch, getState, { api }) => {
   const { json, res } = await api.create('/user', { user });
-  console.log(json, res);
   if (res.status === 200) {
     await AsyncStorage.setItem('api_token', json.apiKey);
   }

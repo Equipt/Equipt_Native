@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import Notification from './components/Notification';
 import * as notificationActions from './actions.js';
 
-const mapStateToProps = state => {
-  return {
-    ...state.notification
-  }
-};
+const mapStateToProps = state => ({
+  ...state.notification
+});
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({

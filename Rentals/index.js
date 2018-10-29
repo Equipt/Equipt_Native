@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Rental from './components/Rental';
+import Rentals from './components/Rentals';
 
-import * as rentalActions from './actions.js';
+import * as rentalActions from './../Rental/actions.js';
 
-const mapStateToProps = ({ rental }) => ({
-  rental
+const mapStateToProps = ({ session }) => ({
+  rentals: session.rentals
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rental);
+export default connect(mapStateToProps, mapDispatchToProps)(Rentals);

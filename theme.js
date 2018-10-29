@@ -41,6 +41,10 @@ const theme = {
     minHeight: 10,
     textAlign: 'left',
     color: '#a94442'
+  },
+  starContainer: {
+    width: 100,
+    marginTop: 5
   }
 }
 

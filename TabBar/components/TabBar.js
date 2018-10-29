@@ -42,7 +42,7 @@ export default class TabBar extends Component {
             { this.renderIcon(styles.findImage) }
             <Text style={[styles.text, styles.smallTab]}>Rent</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[ styles.tab, currentTab.key === 'Schedule' && styles.disabled ]} onPress={ () => navigate('Schedule') }>
+          <TouchableOpacity style={[ styles.tab, currentTab.key === 'Rentals' && styles.disabled ]} onPress={ () => navigate('Rentals') }>
             { this.renderIcon(styles.schedule) }
             <Text style={[styles.text, styles.smallTab]}>Schedule</Text>
           </TouchableOpacity>

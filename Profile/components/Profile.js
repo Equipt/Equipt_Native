@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import theme from '../../theme.js';
 
 const Profile = ({
-  name,
+  session,
   actions
 }) => (
   <View style={ styles.container }>
-    <Text>Profile</Text>
+    <Text>{session.firstname} {session.lastname}</Text>
     <TouchableOpacity onPress={ actions.signOut }>
       <Text>Logout</Text>
     </TouchableOpacity>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
+import StarRating from 'react-native-star-rating';
 
 import theme from '../../theme.js';
 
@@ -10,6 +11,7 @@ import RentalSelection from './RentalSelection';
 import RatingsList from './RatingsList';
 
 import backArrowIcon from '../../assets/back-arrow.png';
+import profileIcon from '../../assets/profile.png';
 
 export default class SportingGood extends Component {
 
@@ -39,13 +41,11 @@ export default class SportingGood extends Component {
 
     const { datePickerIsVisible } = this.state;
     const { sportingGood = {}, rental, navigation, actions } = this.props;
-    const { images = [], rentals, ratings, age, title, brand, model, description, pricePerDay, slug, coordinates, totalRatings } = sportingGood;
+    const { images = [], rentals, user, ratings, age, title, brand, model, description, pricePerDay, slug, coordinates, totalRatings, overallRating } = sportingGood;
 
     if(!Object.keys(sportingGood).length) {
       return <Loading/>;
     }
-
-    console.log(sportingGood);
 
     return (
       <View style={{flex: 1}}>
@@ -57,9 +57,15 @@ export default class SportingGood extends Component {
           {/* Basic Info Section */}
           <View style={ styles.container }>
             <Text style={ styles.title }>{ title }</Text>
+            <StarRating disabled={true} maxStars={5} rating={overallRating} fullStarColor={'#5C9059'} starSize={ 20 } containerStyle={[styles.starContainer, styles.customStarContainer]}/>
             <Text style={ styles.brand }>{ brand }</Text>
             <Text style={ styles.brand }>{ model }</Text>
             <Text style={ styles.desc }>{ description }</Text>
+            { /* Owners Profile */}
+            <View style={ styles.profileContainer }>
+              <Image style={ styles.ownerProfile }source={ user.profile ? { uri: user.profile } : profileIcon }/>
+              <Text style={ styles.firstnameTxt }>{ user.firstname }</Text>
+            </View>
           </View>
           {/* Vps Section */}
           <View style={ styles.vpsContainer }>
@@ -121,6 +127,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 20,
+    maxWidth: '80%',
     color: '#484848',
     fontSize: 22,
     fontWeight: 'bold'
@@ -142,6 +149,10 @@ const styles = StyleSheet.create({
   sliderContainer: {
     height: 200,
     maxHeight: 200
+  },
+  customStarContainer: {
+    marginTop: 10,
+    marginBottom: 10
   },
   backIconContainer: {
     position: 'absolute',
@@ -173,18 +184,36 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     fontSize: 16,
   },
+  profileContainer: {
+    position: 'absolute',
+    top: 20,
+    right: 0,
+    margin: 'auto'
+  },
+  ownerProfile: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#7E7D7D'
+  },
+  firstnameTxt: {
+    textAlign: 'center',
+    top: 5
+  },
   map: {
     width: '100%',
-    height: 200
+    height: 185
   },
   vpsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 20
+    margin: 20,
+    marginTop: 5
   },
   vp: {
     width: 70,
-    paddingBottom: 15,
+    paddingBottom: 5,
   },
   vpText: {
     textAlign: 'center',

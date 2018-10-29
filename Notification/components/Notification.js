@@ -2,18 +2,35 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import closeIcon from '../../assets/close.png';
 
-const Notification = ({ isOpen, error, info, actions, customStyles = {} }) => {
+const Notification = ({ isOpen, error, info, actions, customStyles = {} } = {}) => {
 
   const styles = getStyles(customStyles);
 
-  return isOpen ?
-    (<View style={ styles.wrapper }>
-      <TouchableOpacity style={ styles.closeWrapper } onPress={ actions.closeNotification }>
-        <Image style={ styles.closeIcon } source={ closeIcon }/>
-      </TouchableOpacity>
-      <Text style={ styles.text }>{ error || info }</Text>
-    </View>) :
-    null;
+  if (!isOpen) return null;
+
+  if (error) {
+    return (
+      <View style={[styles.wrapper, styles.error]}>
+        <TouchableOpacity style={ styles.closeWrapper } onPress={ actions.closeNotification }>
+          <Image style={ styles.closeIcon } source={ closeIcon }/>
+        </TouchableOpacity>
+        <Text style={[styles.text, styles.errorText]}>{ typeof error === 'string' ? error : error.join('\n') }</Text>
+      </View>
+    )
+  }
+
+  if (info) {
+    return (
+      <View style={[styles.wrapper, styles.info]}>
+        <TouchableOpacity style={ styles.closeWrapper } onPress={ actions.closeNotification }>
+          <Image style={ styles.closeIcon } source={ closeIcon }/>
+        </TouchableOpacity>
+        <Text style={[styles.text, styles.infoText]}>{ typeof info === 'string' ? info : info.join('\n') }</Text>
+      </View>
+    )
+  }
+
+  return null;
 
 }
 
@@ -24,7 +41,6 @@ const getStyles = customStyles => (
       height: 35,
       minHeight: 50,
       padding: 10,
-      backgroundColor: '#EFDFDE'
     },
     closeWrapper: {
       position: 'absolute',
@@ -39,11 +55,19 @@ const getStyles = customStyles => (
       height: 15
     },
     text: {
-      color: '#a94442',
       textAlign: 'center'
     },
-    error: {
+    errorContainer: {
       backgroundColor: '#EFDFDE'
+    },
+    errorText: {
+      color: '#a94442'
+    },
+    info: {
+      backgroundColor: '#dff0d8'
+    },
+    infoText: {
+      color: '#5C9059'
     },
     ...customStyles
   })

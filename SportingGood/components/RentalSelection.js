@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet, Modal, TouchableOpacity, Text, Image, Dimensions } from 'react-native';
 import DatePickerRange from 'react-native-calendario';
 import Moment from 'moment';
@@ -7,50 +7,102 @@ import theme from '../../theme.js';
 import closeIcon from '../../assets/close.png';
 import Notification from '../../Notification';
 
+import loadingIcon from '../../assets/loading.gif';
+
 const moment = extendMoment(Moment);
 
-const RentalSelection = ({
-  theme,
-  sportingGood,
-  rentals,
-  rental,
-  actions,
-  isVisible = false,
-  onClose,
-  onSelect,
-  customNotificationStyles
-}) => (
-  <Modal visible={ isVisible }>
-    <Notification customStyles={ customNotificationStyles }/>
-    <TouchableOpacity style={ styles.closeIconContainer } onPress={ onClose }>
-      <Image source={ closeIcon } style={ styles.closeIcon }/>
-    </TouchableOpacity>
-    <View style={ styles.modalContainer }>
-      <DatePickerRange
-        startDate={ rental ? rental.startDate : null }
-        endDate={ rental ? rental.endDate : null }
-        theme={ theme }
-        renderDayContent={ ({ date, active }) => (
-          <Text style={[styles.day, takenDay(rentals, date) && styles.dayTaken, active && styles.dayActive ]}>
-            { moment(date).format('D') }
-          </Text>
-        )}
-        onChange={ range => actions.selectRental(range, sportingGood, true) }
-      />
-    </View>
-    <TouchableOpacity style={ styles.rentBtnContainer } onPress={ () => actions.rent(rental) }>
-      <Text style={[ styles.successBtn, !rental && styles.deactiveBtn ]}>Rent</Text>
-    </TouchableOpacity>
-  </Modal>
-)
+class RentalSelection extends Component {
 
-const takenDay = (rentals, date) => {
-  return rentals.filter(rental => {
-    const startDate = new Date(rental.startDate);
-    const endDate = new Date(rental.endDate);
-    const range = moment().range(startDate, endDate);
-    return range.contains(date);
-  }).length > 0;
+  constructor(props) {
+    super(props);
+    this.state = {
+      dates: null,
+      loading: false
+    }
+    this.hasSelectedDates = this.hasSelectedDates.bind(this);
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ loading: false });
+  }
+
+  takenDay(date) {
+    const { rentals } = this.props;
+    return rentals.filter(rental => {
+      const startDate = new Date(rental.startDate);
+      const endDate = new Date(rental.endDate);
+      const range = moment().range(startDate, endDate);
+      return range.contains(date);
+    }).length > 0;
+  }
+
+  hasSelectedDates() {
+    const { dates } = this.state;
+    if(!dates || !dates.startDate) {
+      return true;
+    }
+    return false;
+  }
+
+  render() {
+    const {
+      theme,
+      sportingGood,
+      rentals,
+      rental,
+      actions: {
+        selectRental,
+        rent,
+        clearRental
+      },
+      isVisible = false,
+      onClose,
+      onSelect,
+      customNotificationStyles
+    } = this.props;
+
+    const { dates, loading } = this.state;
+
+    return (
+      <Modal visible={ isVisible } animationType="slide">
+        <Notification customStyles={ customNotificationStyles }/>
+        <TouchableOpacity style={ styles.closeIconContainer } onPress={ onClose }>
+          <Image source={ closeIcon } style={ styles.closeIcon }/>
+        </TouchableOpacity>
+        <Text style={ styles.total }>{ rental && rental.total && `$${ rental.total }` }</Text>
+        <View style={ styles.modalContainer }>
+          <DatePickerRange
+            startDate={ dates ? dates.startDate : null }
+            endDate={ dates ? dates.endDate : null }
+            theme={ theme }
+            monthHeight={ 470 }
+            renderDayContent={ ({ date, active }) => (
+              <Text style={[styles.day, this.takenDay(date) && styles.dayTaken, active && styles.dayActive ]}>
+                { moment(date).format('D') }
+              </Text>
+            )}
+            onChange={ range => {
+              clearRental();
+              this.setState({
+                dates: range,
+                loading: false
+              })
+            }}
+          />
+        </View>
+        <TouchableOpacity style={[styles.rentBtnContainer, this.hasSelectedDates() && styles.rentDeactiveBtn]} onPress={ () => {
+          this.setState({ loading: true });
+          rental ? rent(rental, () => onClose()) : selectRental(dates, true);
+        }}>
+          {
+            loading ?
+            <Image style={ styles.loading } source={ loadingIcon }/> :
+            <Text style={ styles.btnTxt }>{ rental ? 'Rent' : 'Check Availability' }</Text>
+          }
+        </TouchableOpacity>
+      </Modal>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -58,6 +110,16 @@ const styles = StyleSheet.create({
   modalContainer: {
     paddingTop: 90,
     marginBottom: 70
+  },
+  total: {
+    position: 'absolute',
+    top: 55,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#5C9059'
   },
   day: {
     width: 40,
@@ -85,10 +147,27 @@ const styles = StyleSheet.create({
   },
   rentBtnContainer: {
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
     left: 0,
-    top: Dimensions.get('window').height - 64,
+    top: Dimensions.get('window').height - 70,
     width: '100%',
-    zIndex: 10000
+    height: 70,
+    zIndex: 10000,
+    backgroundColor: '#5C9059'
+  },
+  rentDeactiveBtn: {
+    opacity: 0.7
+  },
+  btnTxt: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#fff',
+    lineHeight: 0
+  },
+  loading: {
+    width: 50,
+    height: 50
   }
 });
 
@@ -101,6 +180,9 @@ RentalSelection.defaultProps = {
     },
     activeDayTextStyle: {
       color: '#fff',
+    },
+    monthTitleStyle: {
+      color: '#5C9059'
     }
   },
   customNotificationStyles: {
