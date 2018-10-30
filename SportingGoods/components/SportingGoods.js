@@ -17,7 +17,7 @@ class SportingGoods extends Component {
   render() {
     const { sportingGoods, navigation, actions } = this.props;
 
-    if (!sportingGoods.results || !sportingGoods.results.length) {
+    if (!sportingGoods.results) {
       return <Loading/>;
     }
 

@@ -3,15 +3,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Rentals from './components/Rentals';
 
-import * as rentalActions from './../Rental/actions.js';
+import * as rentalsActions from './actions.js';
 
-const mapStateToProps = ({ session }) => ({
-  rentals: session.rentals
+const mapStateToProps = ({ rentals }) => ({
+  rentals
 });
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    ...rentalActions
+    ...rentalsActions
   }, dispatch)
 })
 

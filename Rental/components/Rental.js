@@ -8,7 +8,6 @@ class Rental extends Component {
     const { navigation, actions } = this.props;
     const hash = navigation.getParam('rental_hash');
     const slug = navigation.getParam('sporting_good_slug');
-    console.log(hash, slug);
     actions.fetchRental(slug, hash);
   }
 
@@ -21,7 +20,7 @@ class Rental extends Component {
     const {
       rental: {
         sportingGood
-      }
+      } = {}
     } = this.props;
 
     return (
