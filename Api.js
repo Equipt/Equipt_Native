@@ -3,19 +3,23 @@ import { AsyncStorage } from "react-native";
 export default class Api {
 
   constructor(domain) {
-    this.domain = domain;
+
+    this.domain = process.env.API_URL;
   }
 
   async getToken() {
     try {
-      return await AsyncStorage.getItem('api_token');
+      return await AsyncStorage.getItem('api_token') || '';
     } catch (error) {
       return null;
     }
   }
 
+  async clearToken() {
+    return await AsyncStorage.setItem('api_token', '');
+  }
+
   async create(route, data) {
-    console.log(this.domain + route);
     return await this.send(this.domain + route, 'POST', data);
   }
 

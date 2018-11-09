@@ -6,9 +6,10 @@ import SportingGood from './components/SportingGood';
 import * as sportingGoodActions from './actions.js';
 import * as rentalActions from '../Rental/actions.js';
 
-const mapStateToProps = ({ sportingGood, rental }) => ({
+const mapStateToProps = ({ sportingGood, rental, session }) => ({
   sportingGood,
-  rental 
+  rental,
+  session
 });
 
 const mapDispatchToProps = dispatch => ({

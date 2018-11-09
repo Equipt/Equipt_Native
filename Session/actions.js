@@ -6,8 +6,9 @@ import { isLoading } from '../Loading/actions.js';
 
 
 // Login User
-export const login = (data, navigation) => async (dispatch, getState, { api }) => {
+export const login = data => async (dispatch, getState, { api }) => {
   const { json, res } = await api.create('/session', data);
+  console.log(data);
   if (res.status === 200) {
     await AsyncStorage.setItem('api_token', json.apiKey);
     dispatch(setCurrentUser(json));
@@ -17,8 +18,9 @@ export const login = (data, navigation) => async (dispatch, getState, { api }) =
 };
 
 // Register User
-export const register = (user, navigation) => async(dispatch, getState, { api }) => {
+export const register = user => async(dispatch, getState, { api }) => {
   const { json, res } = await api.create('/user', { user });
+  console.log(user);
   if (res.status === 200) {
     await AsyncStorage.setItem('api_token', json.apiKey);
   }

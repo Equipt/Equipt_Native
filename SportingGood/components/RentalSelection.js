@@ -5,6 +5,8 @@ import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import theme from '../../theme.js';
 import closeIcon from '../../assets/close.png';
+
+import Address from '../../Address';
 import Notification from '../../Notification';
 
 import loadingIcon from '../../assets/loading.gif';
@@ -20,6 +22,7 @@ class RentalSelection extends Component {
       loading: false
     }
     this.hasSelectedDates = this.hasSelectedDates.bind(this);
+    this.renderDatePicker = this.renderDatePicker.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -38,29 +41,12 @@ class RentalSelection extends Component {
 
   hasSelectedDates() {
     const { dates } = this.state;
-    if(!dates || !dates.startDate) {
-      return true;
-    }
-    return false;
+    return !dates || !dates.startDate ? true : false;
   }
 
   render() {
-    const {
-      theme,
-      sportingGood,
-      rentals,
-      rental,
-      actions: {
-        selectRental,
-        rent,
-        clearRental
-      },
-      isVisible = false,
-      onClose,
-      onSelect,
-      customNotificationStyles
-    } = this.props;
 
+    const { session, isVisible = false, onClose, customNotificationStyles } = this.props;
     const { dates, loading } = this.state;
 
     return (
@@ -69,6 +55,19 @@ class RentalSelection extends Component {
         <TouchableOpacity style={ styles.closeIconContainer } onPress={ onClose }>
           <Image source={ closeIcon } style={ styles.closeIcon }/>
         </TouchableOpacity>
+        {
+          session.isVerified ? this.renderDatePicker() : <Address/>
+        }
+      </Modal>
+    )
+  }
+
+  renderDatePicker() {
+
+    const { rental, actions, onClose } = this.props;
+
+    return (
+      <View>
         <Text style={ styles.total }>{ rental && rental.total && `$${ rental.total }` }</Text>
         <View style={ styles.modalContainer }>
           <DatePickerRange
@@ -82,7 +81,7 @@ class RentalSelection extends Component {
               </Text>
             )}
             onChange={ range => {
-              clearRental();
+              actions.clearRental();
               this.setState({
                 dates: range,
                 loading: false
@@ -92,7 +91,7 @@ class RentalSelection extends Component {
         </View>
         <TouchableOpacity style={[styles.rentBtnContainer, this.hasSelectedDates() && styles.rentDeactiveBtn]} onPress={ () => {
           this.setState({ loading: true });
-          rental ? rent(rental, () => onClose()) : selectRental(dates, true);
+          rental ? actions.rent(rental, () => onClose()) : actions.selectRental(dates, true);
         }}>
           {
             loading ?
@@ -100,7 +99,7 @@ class RentalSelection extends Component {
             <Text style={ styles.btnTxt }>{ rental ? 'Rent' : 'Check Availability' }</Text>
           }
         </TouchableOpacity>
-      </Modal>
+      </View>
     )
   }
 }

@@ -9,10 +9,15 @@ const mapStateToProps = ({ rentals }) => ({
   rentals
 });
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({
+const mapDispatchToProps = dispatch => {
+
+  const actions = bindActionCreators({
     ...rentalsActions
-  }, dispatch)
-})
+  }, dispatch);
+
+  actions.fetchRentals();
+
+  return { actions };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rentals);

@@ -46,7 +46,7 @@ export default class TabBar extends Component {
             { this.renderIcon(styles.schedule) }
             <Text style={[styles.text, styles.smallTab]}>Schedule</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[ styles.tab, currentTab.key === 'OwnedGoods' && styles.disabled ]} onPress={ () => navigate('OwnedGoods') }>
+          <TouchableOpacity style={[ styles.tab, currentTab.key === 'OwnersSportingGoods' && styles.disabled ]} onPress={ () => navigate('OwnersSportingGoods') }>
             { this.renderIcon() }
             <Text style={[styles.text, styles.smallTab]}>My Items</Text>
           </TouchableOpacity>

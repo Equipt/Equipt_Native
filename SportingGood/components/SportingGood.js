@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, ScrollView, Text, Image, Modal, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
 import StarRating from 'react-native-star-rating';
 
@@ -18,7 +18,7 @@ export default class SportingGood extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      datePickerIsVisible: false
+      datePickerIsVisible: false,
     }
   }
 
@@ -40,7 +40,7 @@ export default class SportingGood extends Component {
   render() {
 
     const { datePickerIsVisible } = this.state;
-    const { sportingGood = {}, rental, navigation, actions } = this.props;
+    const { sportingGood = {}, rental, session, navigation, actions } = this.props;
     const { images = [], rentals, user, ratings, age, title, brand, model, description, pricePerDay, slug, coordinates, totalRatings, overallRating } = sportingGood;
 
     if(!Object.keys(sportingGood).length) {
@@ -106,7 +106,7 @@ export default class SportingGood extends Component {
             <Text style={[styles.successBtn, styles.rentBtn]}>Select Dates</Text>
           </TouchableOpacity>
         </View>
-        {/* Select dates modal */}
+        {/* Select Dates Modal */}
         <RentalSelection { ...this.props }
           isVisible={ datePickerIsVisible }
           sportingGood={ sportingGood }

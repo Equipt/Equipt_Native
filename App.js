@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from "react-native";
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, YellowBox } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, NavigationActions } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
@@ -21,13 +21,18 @@ import Register from './Register';
 import Rentals from './Rentals';
 import Rental from './Rental';
 import Notification from './Notification';
+import OwnersSportingGoods from './OwnersSportingGoods';
 
 import reducers from './reducers.js';
 import Api from './Api.js';
 
-const api = new Api(process.env.API_URL);
+
+const api = new Api();
 
 let _navigator;
+
+// Ignore warnings in dev
+YellowBox.ignoreWarnings(['Remote debugger is in a background tab which may cause apps to perform slowly']);
 
 // Setup Naviatiors
 const SignedOutNavigator = createStackNavigator({
@@ -65,7 +70,8 @@ const SignedInNavigator = createBottomTabNavigator({
   SportingGood,
   Profile,
   Rentals,
-  Rental
+  Rental,
+  OwnersSportingGoods
 }, {
   initialRouteName: 'SportingGoods',
   tabBarPosition: "bottom",

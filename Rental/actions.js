@@ -70,9 +70,18 @@ export const rent = (rental, cb) => async(dispatch, getState, { api, navigate })
 
 }
 
-export const fetchRental = (slug, hashId) => async(dispatch, getState, { api, navigate }) => {
+export const findRental = (hashId) => async(dispatch, getState, { api, navigate }) => {
+
+  // const { json, res } = await api.show(`/sporting_goods/${ slug }/rentals/${ hashId }`);
+
+  const { rentals } = getState();
+
+  const rental = rentals.filter(rental => rental.hashId === hashId)[0];
+
+  dispatch(setRental(rental));
 
 }
+
 
 export const setRental = rental => ({
   type: types.SET_RENTAL,

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import SubmitBtn from '../../uiComponents/SubmitBtn';
+import FBSDK from 'react-native-fbsdk';
+const { LoginButton, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
 
 import theme from '../../theme.js';
 
@@ -20,8 +22,15 @@ export class Login extends Component {
 
     return (
       <View style={styles.container}>
-        <TextInput style={ styles.formField } placeholder="Enter your Email" onChangeText={ email => this.setState({ email }) }/>
-        <TextInput secureTextEntry={ true } style={ styles.formField } placeholder="Enter your Password" onChangeText={ password => this.setState({ password }) }/>
+        <TextInput
+          style={ styles.formField }
+          placeholder="Enter your Email"
+          onChangeText={ email => this.setState({ email }) }/>
+        <TextInput
+          secureTextEntry={ true }
+          style={ styles.formField }
+          placeholder="Enter your Password"
+          onChangeText={ password => this.setState({ password }) }/>
         <SubmitBtn label="Log In" onSubmit={ () => actions.login(this.state) } isValid={ email.length && password.length }/>
         <TouchableOpacity style={ styles.facebookBtn } onPress={ () => actions.facebookLogin() }>
           <Text style={ styles.facebookText }>Facebook Login</Text>
@@ -41,7 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4379DE',
     width: '100%',
     padding: 20,
-    marginTop: 40
+    marginTop: 20
   },
   facebookText: {
     fontSize: 18,

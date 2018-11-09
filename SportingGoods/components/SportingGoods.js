@@ -7,32 +7,27 @@ import SportingGoodItem from './SportingGoodItem.js';
 
 import theme from '../../theme.js';
 
-class SportingGoods extends Component {
+const SportingGoods = ({
+  sportingGoods,
+  navigation,
+  actions
+}) => {
 
-  componentWillMount() {
-    const { actions } = this.props;
-    actions.fetchSportingGoods();
+  if (!sportingGoods.results) {
+    return <Loading/>;
   }
 
-  render() {
-    const { sportingGoods, navigation, actions } = this.props;
-
-    if (!sportingGoods.results) {
-      return <Loading/>;
-    }
-
-    return (
-      <View style={ styles.container }>
-        <Filter actions={ actions } search={ actions.fetchSportingGoods }/>
-        <FlatList data={ sportingGoods.results }
-                  style={ styles.list }
-                  renderItem={ ({ item }) => <SportingGoodItem { ...item } navigation={ navigation }/> }
-                  keyExtractor={ (item, index) => index.toString() }
-                  />
-      </View>
-    )
-  }
-
+  return (
+    <View style={ styles.container }>
+      <Filter actions={ actions } search={ actions.fetchSportingGoods }/>
+      <FlatList
+        data={ sportingGoods.results }
+        style={ styles.list }
+        renderItem={ ({ item }) => <SportingGoodItem { ...item } navigation={ navigation }/> }
+        keyExtractor={ (item, index) => index.toString() }
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

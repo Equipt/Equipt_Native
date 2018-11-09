@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SportingGoods from './components/SportingGoods';
 
+import OwnersSportingGoods from './components/OwnersSportingGoods';
 import * as sportingGoodsActions from './actions.js';
 
-const mapStateToProps = state => ({
-  sportingGoods: state.sportingGoods
+const mapStateToProps = ({ sportingGoods }) => ({
+  sportingGoods
 });
 
 const mapDispatchToProps = dispatch => {
@@ -17,7 +17,9 @@ const mapDispatchToProps = dispatch => {
 
   actions.fetchSportingGoods();
 
-  return { actions };
-};
+  return {
+    actions
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(SportingGoods);
+export default connect(mapStateToProps, mapDispatchToProps)(OwnersSportingGoods);

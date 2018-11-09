@@ -24,7 +24,6 @@ export class Register extends Component {
   render() {
     const { session, actions, navigation } = this.props;
     const { errors = {} } = session || {};
-    console.log(errors);
     return (
       <View style={styles.container}>
         <Text style={ styles.errorText}>{ errors['firstname'] }</Text>
@@ -32,7 +31,7 @@ export class Register extends Component {
         <Text style={ styles.errorText}>{ errors['lastname'] }</Text>
         <TextInput style={ styles.formField } placeholder="Enter Your Last Name" onChangeText={ lastname => this.setState({ lastname }) }/>
         <Text style={ styles.errorText}>{ errors['email'] }</Text>
-        <TextInput style={ styles.formField } placeholder="Enter Your Email" onChangeText={ email => this.setState({ email }) }/>
+        <TextInput style={ styles.formField } placeholder="Enter Your Email" onChangeText={ email => this.setState({ email: email.toLowerCase() }) }/>
         <Text style={ styles.errorText}>{ errors['password'] }</Text>
         <TextInput secureTextEntry={ true } style={ styles.formField } placeholder="Enter A Password" onChangeText={ password => this.setState({ password }) }/>
         <Text style={ styles.errorText}>{ errors['password_confirmation'] }</Text>

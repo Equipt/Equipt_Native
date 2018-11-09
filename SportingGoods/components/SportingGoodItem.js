@@ -5,7 +5,7 @@ import StarRating from 'react-native-star-rating';
 const SportingGoodItem = ({ navigation, slug, title, brand, primary_image, price_per_day, overall_rating }) => (
     <View style={ styles.container }>
       <TouchableOpacity onPress={ () => navigation.navigate('SportingGood', { slug }) }>
-        { primary_image ? <Image style={ styles.image } source={{ uri: process.env.BASE_URL + primary_image }}/> : <View style={ styles.blankImage }></View> }
+        { primary_image ? <Image style={ styles.image } source={{ uri: process.env.S3_URL + primary_image }}/> : <View style={ styles.blankImage }></View> }
         <Text style={ styles.title }>{ title }</Text>
         <Text>{ brand }</Text>
         <Text style={ styles.price }>${ price_per_day } per day</Text>

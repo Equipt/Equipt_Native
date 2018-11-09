@@ -12,7 +12,7 @@ export class Home extends Component {
         <Image style={ styles.logo } source={require('../assets/icon.png')} />
         <Text style={ styles.brandName }>Equipt</Text>
         <TouchableOpacity onPress={ () => navigation.navigate('Login') }>
-          <Text>Sign up</Text>
+          <Text style={ styles.signUp }>Sign up</Text>
         </TouchableOpacity>
       </View>
     )
@@ -25,10 +25,14 @@ const styles = StyleSheet.create({
   logo: {
     width: '50%',
     height: 200,
-    marginBottom: 60
+    marginBottom: 20
   },
   brandName: {
     fontSize: 60,
     color: '#5C9059'
+  },
+  signUp: {
+    marginTop: 40,
+    fontSize: 18
   }
 });
