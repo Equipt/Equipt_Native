@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 
 import theme from '../../theme.js';
+import SportingGood from './SportingGoodItem.js';
 
 const OwnersSportingGoods = ({
   sportingGoods
@@ -9,7 +10,7 @@ const OwnersSportingGoods = ({
   <View style={ styles.container }>
     <FlatList data={ sportingGoods.results }
       style={ styles.list }
-      renderItem={ ({ item }) => <Text>{ item.title }</Text> }
+      renderItem={ ({ item }) => <SportingGood { ...item }/> }
       keyExtractor={ (item, index) => index.toString() }
       />
   </View>

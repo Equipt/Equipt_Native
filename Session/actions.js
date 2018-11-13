@@ -8,7 +8,6 @@ import { isLoading } from '../Loading/actions.js';
 // Login User
 export const login = data => async (dispatch, getState, { api }) => {
   const { json, res } = await api.create('/session', data);
-  console.log(data);
   if (res.status === 200) {
     await AsyncStorage.setItem('api_token', json.apiKey);
     dispatch(setCurrentUser(json));

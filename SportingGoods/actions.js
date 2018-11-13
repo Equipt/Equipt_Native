@@ -7,7 +7,7 @@ export const fetchSportingGoods = ({
   distance = 5000
 } = {}) => async (dispatch, getState, { api, algoliaClient }) => {
 
-  const index = algoliaClient.initIndex(`SportingGood_${ process.env.NODE_ENV }`);
+  const index = algoliaClient.initIndex(`SportingGood_${ process.env.AGOLIA_ENV }`);
   const { id } = getState().session;
 
   const params = {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AsyncStorage } from "react-native";
 import { Button, StyleSheet, Text, View, YellowBox } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator, NavigationActions } from 'react-navigation';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import algoliaSearch from 'algoliasearch';
@@ -25,7 +25,6 @@ import OwnersSportingGoods from './OwnersSportingGoods';
 
 import reducers from './reducers.js';
 import Api from './Api.js';
-
 
 const api = new Api();
 
@@ -100,11 +99,12 @@ const middleware = { api, algoliaClient, navigate };
 // Thunk setup
 const thunkMiddleware = thunk.withExtraArgument(middleware);
 
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // Create Store
 const store = createStore(
   reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunkMiddleware)
+  composeEnhancer(applyMiddleware(thunkMiddleware))
 );
 
 export default class App extends Component {

@@ -16,7 +16,8 @@ const theme = {
   },
   header: {
     fontSize: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    color: '#333'
   },
   formField: {
     borderWidth: 1,

@@ -25,7 +25,7 @@ export class Login extends Component {
         <TextInput
           style={ styles.formField }
           placeholder="Enter your Email"
-          onChangeText={ email => this.setState({ email }) }/>
+          onChangeText={ email => this.setState({ email: email.toLowerCase() }) }/>
         <TextInput
           secureTextEntry={ true }
           style={ styles.formField }
