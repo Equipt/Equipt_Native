@@ -15,7 +15,7 @@ const GeoComplete = ({
     fetchDetails={true}
     renderDescription={row => row.description}
     query={{
-      key: 'AIzaSyDagGOsw-5ueQ_W1xutH2EvaSsQ0FlzYGE',
+      key: process.env.GOOGLE_MAPS_KEY,
       language: 'en', // language of the results
     }}
     styles={addressStyles}
