@@ -55,7 +55,7 @@ class Filter extends Component {
 const styles = StyleSheet.create({
   ...theme,
   container: {
-    marginTop: 25,
+    marginTop: 35,
     marginBottom: 10,
     zIndex: 2
   },

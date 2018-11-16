@@ -4,7 +4,6 @@ import { showNotification } from './../Notification/actions.js';
 import { Facebook } from 'expo';
 import { isLoading } from '../Loading/actions.js';
 
-
 // Login User
 export const login = data => async (dispatch, getState, { api }) => {
   const { json, res } = await api.create('/session', data);
@@ -60,6 +59,21 @@ export const fetchCurrentUser = () => async (dispatch, getState, { api }) => {
   }
 }
 
+// Update Phone
+export const updatePhone = phoneNumber => async(dispatch, getState) => {
+  const state = getState();
+  state.session.phone.number = phoneNumber;
+  dispatch(setCurrentUser(state.session));
+}
+
+// Update Address
+export const updateAddress = (field, value) => async(dispatch, getState) => {
+  const state = getState();
+  state.session.address[field] = value;
+  dispatch(setCurrentUser(state.session));
+}
+
+// Sign out
 export const signOut = () => async (dispatch, getState, { api }) => {
   dispatch(setCurrentUser(null));
   try {
@@ -67,7 +81,6 @@ export const signOut = () => async (dispatch, getState, { api }) => {
   } catch(err) {
     console.log('Error', err);
   }
-
 }
 
 export default setCurrentUser = user => ({

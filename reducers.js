@@ -7,8 +7,10 @@ import sportingGoods from './SportingGoods/reducer.js';
 import rentals from './Rentals/reducer.js';
 import rental from './Rental/reducer.js';
 import loading from './Loading/reducer.js';
+import form__address from './Address/reducer.js';
 
 export default combineReducers({
+  form__address,
   session,
   notification,
   sportingGood,
