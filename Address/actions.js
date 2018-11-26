@@ -6,7 +6,7 @@ export const updatedAddressForm = address => ({
 })
 
 export const updatePhone = number => ({
-  type: types.FORM__ADDRESS_UPDATED_PHONE,
+  type: types.FORM__PHONE_UPDATED,
   payload: { number }
 })
 

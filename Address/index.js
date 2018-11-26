@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Address from './components/Address';
 
+import * as sessionActions from '../Session/actions.js';
 import * as addressActions from './actions.js';
 
 const mapStateToProps = ({ session, form__address }) => ({
@@ -12,7 +13,8 @@ const mapStateToProps = ({ session, form__address }) => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
-    ...addressActions
+    ...addressActions,
+    ...sessionActions
   }, dispatch)
 });
 

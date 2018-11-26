@@ -14,28 +14,20 @@ const RentalItem = ({
     slug,
     primaryImage
   } = {}
-}) => {
-  return (
-    <View style={ styles.container }>
-      <TouchableOpacity onPress={ () => navigation.navigate('Rental', {
-        rental_hash: hashId,
-        sporting_good_slug: slug
-      })}>
-        <Text style={ styles.title }> { title }</Text>
-        <Text style={ styles.daysTo }>
-          { timeTo.years > 1 ? `${ timeTo.years } Years ` : null }
-          { timeTo.years === 1 ? `${ timeTo.years } Year ` : null }
-          { timeTo.months > 1 ? `${ timeTo.months } Months ` : null }
-          { timeTo.months === 1 ? `${ timeTo.months } Month ` : null }
-          { timeTo.days === 1 ? `${ timeTo.days } Day ` : null }
-          { timeTo.days > 1 ? `${ timeTo.days } Days ` : null }
-          Away
-        </Text>
-        { primaryImage ? <Image style={ styles.image } source={{ uri: process.env.BASE_URL + primaryImage }}/> : <View style={ styles.blankImage }></View> }
-      </TouchableOpacity>
-    </View>
-  )
-};
+}) => (
+  <View style={ styles.container }>
+    <Text>{ hashId }</Text>
+    <TouchableOpacity onPress={ () => navigation.navigate('Rental', {
+      rental_hash: hashId,
+      sporting_good_slug: slug
+    })}>
+      <Text style={ styles.title }> { title }</Text>
+      <Text style={ styles.daysTo }>{ moment(startDate).fromNow() }</Text>
+      <Image style={ styles.image } source={{ uri: primaryImage }}/>
+    </TouchableOpacity>
+  </View>
+)
+
 
 const styles = StyleSheet.create({
   ...theme,

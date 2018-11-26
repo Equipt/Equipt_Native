@@ -28,7 +28,7 @@ const GeoComplete = ({
       country = {},
       zip = {}
     ] } = null) => actions.updatedAddressForm({
-      unit: unit.short_name,
+      number: unit.short_name,
       street: street.short_name,
       city: city.short_name,
       state: state.short_name,

@@ -65,6 +65,9 @@ class RentalSelection extends Component {
   renderDatePicker() {
 
     const { rental, actions, onClose } = this.props;
+    const { dates, loading } = this.state;
+
+    const todaysDate = new Date();
 
     return (
       <View>
@@ -75,11 +78,22 @@ class RentalSelection extends Component {
             endDate={ dates ? dates.endDate : null }
             theme={ theme }
             monthHeight={ 470 }
-            renderDayContent={ ({ date, active }) => (
-              <Text style={[styles.day, this.takenDay(date) && styles.dayTaken, active && styles.dayActive ]}>
-                { moment(date).format('D') }
-              </Text>
-            )}
+            renderDayContent={ ({ date, active }) => {
+
+              const isInPast = date < todaysDate;
+
+              return (
+                <Text style={[
+                    styles.day,
+                    this.takenDay(date) && styles.dayTaken,
+                    active && styles.dayActive,
+                    isInPast && styles.dayInPast
+                  ]}>
+                  { moment(date).format('D') }
+                </Text>
+              );
+
+            }}
             onChange={ range => {
               actions.clearRental();
               this.setState({
@@ -130,6 +144,9 @@ const styles = StyleSheet.create({
   dayTaken: {
     textDecorationLine: 'line-through',
     color: '#82888a'
+  },
+  dayInPast: {
+    color: '#ccc'
   },
   closeIconContainer: {
     position: 'absolute',

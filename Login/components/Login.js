@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import SubmitBtn from '../../uiComponents/SubmitBtn';
-import FBSDK from 'react-native-fbsdk';
-const { LoginButton, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
 
 import theme from '../../theme.js';
 

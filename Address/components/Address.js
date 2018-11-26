@@ -4,6 +4,7 @@ import theme from '../../theme.js';
 import SubmitBtn from '../../uiComponents/SubmitBtn';
 import GeoComplete from './GeoComplete.js';
 import AddressForm from './AddressForm.js';
+import PhoneNumberInput from './PhoneNumberInput';
 
 const Address = ({
   form__address,
@@ -12,7 +13,7 @@ const Address = ({
   actions
 }) => (
   <View style={ styles.container }>
-    <Text style={ styles.text }>You just need to update some basic information</Text>
+    <Text style={ styles.text }>You haven't added your contact details yet...</Text>
     <TextInput
       defaultValue={ session.phone.number }
       style={ styles.formField }
@@ -28,7 +29,13 @@ const Address = ({
       <GeoComplete actions={ actions }/> :
       <AddressForm actions={ actions } session={ session } address={ form__address.address }/>
     }
-    <SubmitBtn label="Update Address" onSubmit={ () => console.log('here') }/>
+    <SubmitBtn label="Update Address" onSubmit={ () => actions.updateProfile({
+      user: {
+        phone: form__address.phone,
+        address: form__address.address
+      }
+    })
+  }/>
   </View>
 )
 

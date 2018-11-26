@@ -12,7 +12,7 @@ export class Home extends Component {
         <Image style={ styles.logo } source={require('../assets/icon.png')} />
         <Text style={ styles.brandName }>Equipt</Text>
         <TouchableOpacity onPress={ () => navigation.navigate('Login') }>
-          <Text style={ styles.signUp }>Sign up</Text>
+          <Text style={ styles.signUp }>Sign In</Text>
         </TouchableOpacity>
       </View>
     )

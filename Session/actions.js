@@ -18,7 +18,6 @@ export const login = data => async (dispatch, getState, { api }) => {
 // Register User
 export const register = user => async(dispatch, getState, { api }) => {
   const { json, res } = await api.create('/user', { user });
-  console.log(user);
   if (res.status === 200) {
     await AsyncStorage.setItem('api_token', json.apiKey);
   }
@@ -29,7 +28,7 @@ export const register = user => async(dispatch, getState, { api }) => {
 export const facebookLogin = () => async (dispatch) => {
   try {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      '734059966732084',
+      '189052371993328',
       { permissions: ["public_profile"] }
     )
     console.log(type, token);
@@ -59,18 +58,14 @@ export const fetchCurrentUser = () => async (dispatch, getState, { api }) => {
   }
 }
 
-// Update Phone
-export const updatePhone = phoneNumber => async(dispatch, getState) => {
-  const state = getState();
-  state.session.phone.number = phoneNumber;
-  dispatch(setCurrentUser(state.session));
-}
+// Update Proile
+export const updateProfile = newSession => async(dispatch, getState, { api }) => {
 
-// Update Address
-export const updateAddress = (field, value) => async(dispatch, getState) => {
-  const state = getState();
-  state.session.address[field] = value;
-  dispatch(setCurrentUser(state.session));
+  console.log(newSession);
+  const { json, res } = await api.update('/users', newSession);
+
+  dispatch(setCurrentUser(json));
+
 }
 
 // Sign out

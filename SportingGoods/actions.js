@@ -21,14 +21,14 @@ export const fetchSportingGoods = ({
     params.aroundRadius = distance;
   }
 
-  try {
-
     const {
       hits,
       nbHits,
       nbPages,
       hitsPerPage
     } = await index.search(params);
+
+
 
     dispatch({
       type: types.SET_SPORTING_GOODS,
@@ -40,13 +40,9 @@ export const fetchSportingGoods = ({
       }
     });
 
-  } catch(err) {
-
-    dispatch({
-      type: types.OPEN_NOTIFICATION,
-      payload: { err }
-    });
-
-  }
+    // dispatch({
+    //   type: types.OPEN_NOTIFICATION,
+    //   payload: { err }
+    // });
 
 }

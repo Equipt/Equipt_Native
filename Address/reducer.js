@@ -13,8 +13,10 @@ export default (state = defaultState, action) => {
       return { ...state, address: action.payload, autocomplete: false };
     case types.FORM__ADDRESS_TOGGLE_AUTOCOMPLETE:
       return { ...state, autocomplete: !state.autocomplete };
-    case types.FORM__ADDRESS_UPDATED_PHONE:
-      return { ...state, phone: action.payload };
+    case types.FORM__PHONE_UPDATED:
+      return { ...state, phone: {
+        number: action.payload 
+      }};
     default:
       return state;
   }

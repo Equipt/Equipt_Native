@@ -8,8 +8,6 @@ export const fetchSportingGood = slug => async(dispatch, getState, { api }) => {
 
   const { json, res } = await api.get(`/sporting_goods/${slug}`);
 
-  console.log(json, res);
-
   if (res.status === 200) {
     dispatch(setSportingGood(json));
   } else {

@@ -19,7 +19,7 @@ export default class Api {
     return await AsyncStorage.setItem('api_token', '');
   }
 
-  async create(route, data) {
+  async create(route, data, options) {
     return await this.send(this.domain + route, 'POST', data);
   }
 
@@ -35,6 +35,10 @@ export default class Api {
     return await this.send(this.domain + route + `/${id}`, 'GET');
   }
 
+  async update(route, data) {
+    return await this.send(this.domain + route, 'PUT', data);
+  }
+
   async send(url, method, data = {}) {
     try {
 
@@ -43,10 +47,13 @@ export default class Api {
       const params = {
         method,
         headers: {
-          "Authorization": `Bearer ${token}`,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         }
+      }
+
+      if (token) {
+        params.headers["Authorization"] = `Bearer ${token}`;
       }
 
       if (method === 'POST' || method === 'PUT') {
@@ -54,11 +61,15 @@ export default class Api {
       }
 
       const res = await fetch(url, params);
+
       const json = await res.json();
 
       return { json, res };
 
     } catch(err) {
+
+      // AsyncStorage.clear();
+
       return {
         json: { error: 'Network Error' },
         res: { status: 500 }
